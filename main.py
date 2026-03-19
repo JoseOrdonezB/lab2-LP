@@ -2,6 +2,7 @@ from src.regex import preparar_regex
 from src.afd_directo import construir_afd_directo
 from src.minimizacion import minimizar_afd
 from src.transiciones import imprimir_tabla_transiciones
+from src.simulacion import simular_afd, verificar_cadena
 
 regex = input("Ingrese la expresión regular: ")
 
@@ -33,3 +34,24 @@ print(f"Cantidad de transiciones: {trans_min}")
 print("\nCOMPARACIÓN FINAL")
 print(f"AFD directo     -> Estados: {estados_directo}, Transiciones: {trans_directo}")
 print(f"AFD minimizado  -> Estados: {estados_min}, Transiciones: {trans_min}")
+ 
+# Simulación
+while True:
+
+    cadena = input("\nIngrese una cadena (o escriba 'salir'): ")
+
+    if cadena.lower() == "salir":
+        print("Finalizando programa.")
+        break
+
+    # Verificación formal
+    pertenece = verificar_cadena(afd_min, cadena, alfabeto)
+
+    if pertenece:
+        print("\nResultado final: CADENA ACEPTADA ✅")
+    else:
+        print("\nResultado final: CADENA RECHAZADA ❌")
+
+    # Simulación detallada
+    print("\n--- Simulación en AFD minimizado ---")
+    simular_afd(afd_min, cadena, alfabeto)
